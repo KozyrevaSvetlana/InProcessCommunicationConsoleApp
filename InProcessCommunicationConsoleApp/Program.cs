@@ -6,6 +6,7 @@ namespace InProcessCommunicationConsoleApp
     {
         private static int totalSum = 0;
         private static readonly object lockObj = new object();
+        private static int cout = 4;
         static void Main(string[] args)
         {
             var data = new Data();
@@ -22,18 +23,16 @@ namespace InProcessCommunicationConsoleApp
             Console.WriteLine();
 
             //Параллельное(для реализации использовать Thread, например List)
-            CalculateSumByThread(data.numbers_100_000, 5);
-            CalculateSumByThread(data.numbers_1000_000, 5);
-            CalculateSumByThread(data.numbers_10_000_000, 5);
+            CalculateSumByThread(data.numbers_100_000, cout);
+            CalculateSumByThread(data.numbers_1000_000, cout);
+            CalculateSumByThread(data.numbers_10_000_000, cout);
             Console.WriteLine();
 
             //Параллельное с помощью LINQ
-            CalculateSumByParallelLink(data.numbers_100_000, 5);
-            CalculateSumByParallelLink(data.numbers_1000_000, 5);
-            CalculateSumByParallelLink(data.numbers_10_000_000, 5);
+            CalculateSumByParallelLink(data.numbers_100_000, cout);
+            CalculateSumByParallelLink(data.numbers_1000_000, cout);
+            CalculateSumByParallelLink(data.numbers_10_000_000, cout);
             Console.ReadLine();
-
-            //Пришлите в чат с преподавателем помимо ссылки на репозиторий номера своих строк в таблице.
         }
 
         private static void CalculateSum(int[] numbers)
@@ -55,15 +54,12 @@ namespace InProcessCommunicationConsoleApp
 
             for (int i = 0; i < numberOfThreads; i++)
             {
-                // Определяем начальный индекс и размер части
                 int start = i * chunkSize;
                 int end = (i == numberOfThreads - 1) ? numbers.Length : start + chunkSize;
-                // Создаем и запускаем поток
                 threads[i] = new Thread(() => Sum(numbers, start, end));
                 threads[i].Start();
             }
 
-            // Дожидаемся завершения всех потоков
             foreach (var thread in threads)
             {
                 thread.Join();
