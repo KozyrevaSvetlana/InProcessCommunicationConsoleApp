@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Dynamic;
+using System.Management;
 
 namespace InProcessCommunicationConsoleApp
 {
@@ -6,7 +8,7 @@ namespace InProcessCommunicationConsoleApp
     {
         private static int totalSum = 0;
         private static readonly object lockObj = new object();
-        private static int cout = 4;
+        private static int cout = Environment.ProcessorCount;
         static void Main(string[] args)
         {
             var data = new Data();
