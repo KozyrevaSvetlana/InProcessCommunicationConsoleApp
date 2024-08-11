@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Dynamic;
-using System.Management;
 
 namespace InProcessCommunicationConsoleApp
 {
